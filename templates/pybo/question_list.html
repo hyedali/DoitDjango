@@ -1,9 +1,37 @@
-{% if question_list %}
-    <ul>
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-3">
+    <table class="table">
+        <thead>
+        <tr class="thead-dark">
+            <td>번호</td>
+            <td>제목</td>
+            <td>작성일시</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% if question_list %}
         {% for question in question_list %}
-            <li><a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a> </li>
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>
+                <a href="{% url 'pybo:detail' question.id %}">
+                    {{ question.subject }}
+                </a>
+            </td>
+            <td>{{ question.create_date }}</td>
+        </tr>
         {% endfor %}
-    </ul>
-{% else %}
-    <p>질문이 없습니다.</p>
-{% endif %}
+        {% else %}
+        <tr>
+            <td colspan="3">질문이 없습니다.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+    <a href="{% url 'pybo:question_create' %}" class="btn btn-primary">
+        질문 등록하기
+    </a>
+</div>
+{% endblock %}
